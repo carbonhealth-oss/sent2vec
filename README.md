@@ -1,10 +1,10 @@
-## Updates 
+## Updates
 
-Code and pre-trained models related to the [Bi-Sent2vec](https://arxiv.org/abs/1912.12481), cross-lingual extension of Sent2Vec can be found [here](https://github.com/epfml/Bi-sent2vec). 
+Code and pre-trained models related to the [Bi-Sent2vec](https://arxiv.org/abs/1912.12481), cross-lingual extension of Sent2Vec can be found [here](https://github.com/epfml/Bi-sent2vec).
 
 # Sent2vec
 
-TLDR: This library provides numerical representations (features) for words, short texts, or sentences, which can be used as input to any machine learning task. 
+TLDR: This library provides numerical representations (features) for words, short texts, or sentences, which can be used as input to any machine learning task.
 
 ### Table of Contents  
 
@@ -41,9 +41,15 @@ $ pip install sent2vec
 
 then you'll get the wrong package. Please follow the instructions in the README.md to install it correctly.
 
+## Packaging zip file
+
+```bash
+python setup.py sdist
+```
+
 # Sentence Embeddings
 
-For the purpose of generating sentence representations, we introduce our sent2vec method and provide code and models. Think of it as an unsupervised version of [FastText](https://github.com/facebookresearch/fastText), and an extension of word2vec (CBOW) to sentences. 
+For the purpose of generating sentence representations, we introduce our sent2vec method and provide code and models. Think of it as an unsupervised version of [FastText](https://github.com/facebookresearch/fastText), and an extension of word2vec (CBOW) to sentences.
 
 The method uses a simple but efficient unsupervised objective to train distributed representations of sentences. The algorithm outperforms the state-of-the-art unsupervised models on most benchmark tasks, and on many tasks even beats supervised models, highlighting the robustness of the produced sentence embeddings, see [*the paper*](https://aclweb.org/anthology/N18-1049) for more details.
 
@@ -57,13 +63,13 @@ If you've installed the Cython module, you can infer sentence embeddings while k
 import sent2vec
 model = sent2vec.Sent2vecModel()
 model.load_model('model.bin')
-emb = model.embed_sentence("once upon a time .") 
+emb = model.embed_sentence("once upon a time .")
 embs = model.embed_sentences(["first sentence .", "another sentence"])
 ```
 
-Text preprocessing (tokenization and lowercasing) is not handled by the module, check `wikiTokenize.py` for tokenization using NLTK and Stanford NLP. 
+Text preprocessing (tokenization and lowercasing) is not handled by the module, check `wikiTokenize.py` for tokenization using NLTK and Stanford NLP.
 
-An alternative to the Cython module is using the python code provided in the `get_sentence_embeddings_from_pre-trained_models` notebook. It handles tokenization and can be given raw sentences, but does not keep the model in memory. 
+An alternative to the Cython module is using the python code provided in the `get_sentence_embeddings_from_pre-trained_models` notebook. It handles tokenization and can be given raw sentences, but does not keep the model in memory.
 
 #### Running Inference with Multiple Processes
 
@@ -103,7 +109,7 @@ cat text.txt | ./fasttext print-sentence-vectors model.bin
 
 (as used in the NAACL2018 paper)
 
-Note: users who downloaded models prior to [this release](https://github.com/epfml/sent2vec/releases/tag/v1) will encounter compatibility issues when trying to use the old models with the latest commit. Those users can still use the code in the release to keep using old models. 
+Note: users who downloaded models prior to [this release](https://github.com/epfml/sent2vec/releases/tag/v1) will encounter compatibility issues when trying to use the old models with the latest commit. Those users can still use the code in the release to keep using old models.
 
 ### Tokenizing
 Both feature generation as above and also training as below do require that the input texts (sentences) are already tokenized. To tokenize and preprocess text for the above models, you can use
@@ -158,7 +164,7 @@ The following arguments are optional:
 Given a pre-trained model `model.bin` , here is how to use these features. For the nearest neighbouring sentence feature, you need the model as well as a corpora in which you can search for the nearest neighbouring sentence to your input sentence. We use cosine distance as our distance metric. To do so, we use the command `nnSent` and the input should be 1 sentence per line:
 
 ```
-./fasttext nnSent model.bin corpora [k] 
+./fasttext nnSent model.bin corpora [k]
 ```
 k is optional and is the number of nearest sentences that you want to output.     
 
@@ -169,9 +175,9 @@ For the analogiesSent, the user inputs 3 sentences A,B and C and finds a sentenc
 
 k is optional and is the number of nearest sentences that you want to output.     
 
-# Unigram Embeddings 
+# Unigram Embeddings
 
-For the purpose of generating word representations, we compared word embeddings obtained training sent2vec models with other word embedding models, including a novel method we refer to as CBOW char + word ngrams (`cbow-c+w-ngrams`). This method augments fasttext char augmented CBOW with word n-grams. You can see the full comparison of results in [*this paper*](https://www.aclweb.org/anthology/N19-1098). 
+For the purpose of generating word representations, we compared word embeddings obtained training sent2vec models with other word embedding models, including a novel method we refer to as CBOW char + word ngrams (`cbow-c+w-ngrams`). This method augments fasttext char augmented CBOW with word n-grams. You can see the full comparison of results in [*this paper*](https://www.aclweb.org/anthology/N19-1098).
 
 ## Extracting Word Embeddings from Pre-Trained Models
 
@@ -186,7 +192,7 @@ uni_embs, vocab = model.get_unigram_embeddings() # Return the full unigram embed
 uni_embs = model.embed_unigrams(['dog', 'cat']) # Return unigram embeddings given a list of unigrams
 ```  
 
-Asking for a unigram embedding not present in the vocabulary will return a zero vector in case of sent2vec. The `cbow-c+w-ngrams` method will be able to use the sub-character ngrams to infer some representation. 
+Asking for a unigram embedding not present in the vocabulary will return a zero vector in case of sent2vec. The `cbow-c+w-ngrams` method will be able to use the sub-character ngrams to infer some representation.
 
 ## Downloading Pre-Trained Models
 
@@ -229,5 +235,3 @@ Information*](https://www.aclweb.org/anthology/N19-1098) NAACL 2019
   year      = {2019}
 }
 ```
-
-

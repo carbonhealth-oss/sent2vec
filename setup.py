@@ -1,7 +1,7 @@
 import sys
-from distutils.core import setup
+from setuptools import setup
 from Cython.Build import cythonize
-from distutils.extension import Extension
+from setuptools.extension import Extension
 import numpy
 
 sourcefiles  = ['src/sent2vec.pyx',
@@ -30,6 +30,6 @@ ext=[Extension('*',
 
 setup(
   name='sent2vec',
-  install_requires=['Cython>=0.29.13', 'numpy>=1.17.1'],
+  install_requires=['Cython>=0.29.13', 'numpy>=1.22.4'],
   ext_modules=cythonize(ext)
 )
