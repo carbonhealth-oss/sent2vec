@@ -30,6 +30,6 @@ ext=[Extension('*',
 
 setup(
   name='sent2vec',
-  install_requires=['Cython>=0.29.13', 'numpy>=1.22.4'],
+  install_requires=['Cython>=0.29.34', 'numpy>=1.24.2'],
   ext_modules=cythonize(ext)
 )
